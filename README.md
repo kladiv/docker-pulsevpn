@@ -142,7 +142,27 @@ SSH ProxyCommand uses the netcat SOCKS5 proxy connection feature.
 *Requirements: Docker Engine 17.12.0+*
 
 ```
-TBD
+version: '3.5'
+
+services:
+  pulsesecure:
+    container_name: pulsesecure
+    hostname: pulsesecure
+    image: pulsesecure:latest
+    ports:
+      - "2222:2222"
+    networks:
+      - pulsesecure
+    environment:
+      VPN_URL: 'https://aaa.bbb.ccc.ddd'
+      VPN_USER: '<USERNAME>'
+      VPN_PASSWORD: '<PASSWORD>'
+      OPENCONNECT_OPTIONS: '--servercert pin-sha256:lERGk61FITjzyKHcJ89xpc6aDwtRkOPAU0jdnUqzW2s='
+      OCPROXY_ENABLE: 1
+    command: sh -c "/root/startup.sh && /usr/bin/supervisord"
+
+networks:
+  pulsesecure:
 ```
 
 ### Logging
